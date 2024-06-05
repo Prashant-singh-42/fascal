@@ -18,7 +18,7 @@ const { errorHandlerMiddleware } = require('./middlewares/errohandler');
 const app = express();
 
 const corsOptions = {
-  origin: ['http://localhost:5173', 'https://mymoviewishlist.netlify.app/auth/'], 
+  origin: ['http://localhost:5173', 'https://mymoviewishlist.netlify.app'], 
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, 
 };
