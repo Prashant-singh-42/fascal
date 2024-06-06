@@ -7,10 +7,10 @@ router.post('/wishlists/:id', editWishlistTitle);
 router.delete('/wishlists/:id', deleteWishlist);
 
 router.post('/wishlists/:id/movies', addMoviesToWishlist);
-router.delete('/wishlists/:id/movies', removeMoviesFromWishlist);
+router.post('/wishlists/:id/delmovies', removeMoviesFromWishlist);
 router.post('/wishlists/:id/visibility', updateWishlistVisibility);
 
 router.get('/publicWishlists', getPublicWishlists);
-router.get('/userWishlists', getUserWishlists);
+router.get('/userWishlists/:id', getUserWishlists);
 
 module.exports = router;

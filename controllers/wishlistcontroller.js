@@ -2,9 +2,9 @@ const Wishlist = require("../models/wishlist");
 
 const createWishlist = async (req, res) => {
   try {
-    const { title } = req.body;
+    const { title, userId} = req.body;
     const wishlist = new Wishlist({
-      userId: req.session.userId,
+      userId: userId,
       title,
     });
     await wishlist.save();
@@ -67,6 +67,7 @@ const removeMoviesFromWishlist = async (req, res) => {
   try {
     const { id } = req.params;
     const movie = req.body;
+    console.log(movie)
     const wishlist = await Wishlist.findByIdAndUpdate(
       id,
       { $pull: { movies: { imdbID: movie.imdbID } } },
@@ -110,7 +111,8 @@ const getPublicWishlists = async (req, res) => {
 
 const getUserWishlists = async (req, res) => {
   try {
-    const wishlists = await Wishlist.find({ userId: req.session.userId });
+    const id = req.params.id;
+    const wishlists = await Wishlist.find({ userId: id });
     res.status(200).json(wishlists);
   } catch (error) {
     res.status(500).json({ error: error.message });
