@@ -12,7 +12,11 @@ const wishlistSchema = new Schema({
     required: [true, 'Please enter a title for the wishlist']
   },
   movies: [{
-    type: String,
+    Title: String,
+    Year: String,
+    imdbID: String,
+    Type: String,
+    Poster: String
   }],
   public: {
     type: Boolean,

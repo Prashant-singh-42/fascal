@@ -48,15 +48,15 @@ const editWishlistTitle = async (req, res) => {
 const addMoviesToWishlist = async (req, res) => {
   try {
     const { id } = req.params;
-    const { movies } = req.body;
-    const wishlist = await Wishlist.findByIdAndUpdate(
-      id,
-      { $push: { movies: { $each: movies } } },
-      { new: true, runValidators: true }
-    );
+    const movie = req.body;
+    const wishlist = await Wishlist.findById(id);
     if (!wishlist) {
       return res.status(404).json({ error: "Wishlist not found" });
     }
+    const movieExists = wishlist.movies.some(mov => mov.imdbID === movie.imdbID);
+
+    if (!movieExists) wishlist.movies.push(movie);
+    await wishlist.save();
     res.status(200).json(wishlist);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -66,10 +66,10 @@ const addMoviesToWishlist = async (req, res) => {
 const removeMoviesFromWishlist = async (req, res) => {
   try {
     const { id } = req.params;
-    const { movies } = req.body;
+    const movie = req.body;
     const wishlist = await Wishlist.findByIdAndUpdate(
       id,
-      { $pull: { movies: { $in: movies } } },
+      { $pull: { movies: { imdbID: movie.imdbID } } },
       { new: true, runValidators: true }
     );
     if (!wishlist) {
